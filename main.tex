@@ -1,16 +1,38 @@
 \documentclass{article}
-\usepackage{pdflscape}      % horizontal orientation
-\pagestyle{empty}           % no numbers
+
+\usepackage[a4paper, landscape, margin=5pt]{geometry}
 \usepackage{hyperref}       % links
 \usepackage{multicol}       % for columns layout
+\usepackage{blindtext}      % lorem ipsum
+\usepackage{listings}       % code
+\usepackage{xcolor}          % color
 
+% settings
+\setlength{\columnsep}{2pt} % column separation
+\pagestyle{empty}           % no page numbers
+% setting listings to Racket style
+\lstdefinestyle{Racket}{   
+    commentstyle=\color{orange},
+    basicstyle=\ttfamily\color{darkgray},
+    keywordstyle=\ttfamily\bfseries\color{black},
+    stringstyle=\color{blue},       
+    breaklines=true,                              
+    keepspaces=true,
+    language=Lisp,
+    keywords={define, let}
+}
+\lstset{style=Racket} 
 
 \begin{document}
-\begin{landscape}
-\textbf{Racket CheatSheet}
-\href{https://github.com/isthissuperuser}{https://github.com/isthissuperuser}
-\begin{multicols}{4}
+\begin{multicols*}{4}
+[
+\textbf{Racket CheatSheet} | \href{https://github.com/isthissuperuser}{https://github.com/isthissuperuser}
+]
 
-\end{multicols}
-\end{landscape}
+\begin{lstlisting}
+(define name value)
+(let ([name value]) (body))
+\end{lstlisting}
+
+\end{multicols*}
 \end{document}
