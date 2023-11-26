@@ -26,13 +26,14 @@
     language=Lisp,
     mathescape=true,
     alsoletter={!, ?},
-    keywords={define, let, set!, vector, vector-set!, apply, null?, list?, equal?, define-syntax, syntax-rules, map, string?, zero?, foldr, foldl, split-at, take, drop, let-values, struct, if, where, cond, s?, set-s-var!, begin, for-each}
+    keywords={define, let, set!, vector, vector-set!, apply, null?, list?, equal?, define-syntax, syntax-rules, map, string?, zero?, foldr, foldl, split-at, take, drop, let-values, struct, if, where, cond, s?, set-s-var!, begin, for-each, pair?, unless}
 }
 \lstset{style=Racket} 
 
 \begin{document}
 \textbf{Racket CheatSheet} - \href{https://github.com/isthissuperuser}{https://github.com/isthissuperuser} \textbar{ }  \textbf{legenda}: \{ \} optional, [ ] one or more, 
-\begin{multicols*}{4}
+\begin{multicols*}{3}
+
 \hrulefill
 
 \textbf{MISC}
@@ -52,7 +53,11 @@
 (equal? var val)
 (string? var)
 (zero? n) ; n == 0
+(pair? lst) ; (not (empty? lst))
+(unless cond)
+    body ; false
 \end{lstlisting}
+
 \hrulefill
 
 \textbf{CONTROL FLOW}
@@ -65,8 +70,8 @@
 (when (c) ; as if but just true
   (begin
     ...))
-(for-each f(elem) lst)
 \end{lstlisting}
+
 \hrulefill
 
 \textbf{VECTORS}
@@ -74,7 +79,15 @@
 #(1 2 3) ; immutable
 (vector 1 2 3) ; mutable
 (vector-set! v 1 0) ; v[1] = 0
+(make-vector length {default_v}) ; mutable
+(build-vector length f(index))
+(vector-length v) ; returns size
+(vector-ref v i) ; return v[i]
+(vector-for-each f(x) v)
+(for ([i (in-vector v)])
+    (body))
 \end{lstlisting}
+
 \hrulefill
 
 \textbf{LISTS}
@@ -97,7 +110,11 @@
   (body)); split at idx into var1, var2
 (take lst n) ; ret first n elem
 (drop lst n) ; ret elems after n
+(for-each f(elem) lst)
+(for ([i (in-list l)])
+    (body))
 \end{lstlisting}
+
 \hrulefill
 
 \textbf{FUNCTIONS}
@@ -114,6 +131,7 @@
     ($\lambda$ () ; state preserved
       (inc1 var)))) 
 \end{lstlisting}
+
 \hrulefill
 
 \textbf{STRUCTS}
@@ -124,6 +142,7 @@
 (s? var) ; is name
 (set-s-var! s val)
 \end{lstlisting}
+
 \hrulefill
 
 \textbf{MACROS}
@@ -135,6 +154,7 @@
     [(_ ...) ()] ; catch all
 ))
 \end{lstlisting}
+
 \hrulefill
 
 \textbf{CONTINUATIONS}
@@ -145,6 +165,14 @@
     (k k)))])
   (cc cc)) ; same as calling k
 \end{lstlisting}
+
 \hrulefill
+
+\textbf{PATTERNS}
+\begin{lstlisting}
+; call/cc list push/pop
+; choice puts in stack checkpoint that call choice again but with all the other choices and returns a choice. Function fail fails if no other choices are present otherwise it pops and call from the stack
+\end{lstlisting}
+
 \end{multicols*}
 \end{document}
